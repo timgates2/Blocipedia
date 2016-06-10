@@ -11,7 +11,7 @@ class ApplicationPolicy
   end
 
   def show?
-    scope.where(:id => record.id).exists?
+    !record.private? || user.present?
   end
 
   def create?
@@ -31,7 +31,7 @@ class ApplicationPolicy
   end
 
   def destroy?
-    false
+    user.present? && (record.user == user || user.admin?)
   end
 
   def scope

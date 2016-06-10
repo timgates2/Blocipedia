@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.5'
 
 group :production do
-  gem 'pg'
+  gem 'pg', '~>0.18.4'
   gem 'rails_12factor'
 end
 
@@ -22,6 +22,7 @@ gem 'bootstrap'
 gem 'figaro'
 gem 'pry'
 gem 'devise'
+gem 'pundit'
 
 group :development, :test do
   gem 'byebug'

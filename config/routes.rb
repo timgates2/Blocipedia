@@ -1,9 +1,29 @@
 Rails.application.routes.draw do
-  get 'welcome/index'
+devise_for :users
+  resources :users,  only: [:update, :show] do
+    post 'downgrade_account' => 'users#downgrade_account', as: :downgrade_account
+    collection do
+      get :autocomplete
+      get :user_search
+    end
+  end
+    resources :wikis do
+    resources :collaborators, only: [:create, :destroy]
+    collection do
+      get :autocomplete
+    end
+  end
 
-  get 'welcome/about'
+  resources :charges, only: [:new, :create, :destroy]
+  resources :search, only: [:index]
+
+  authenticated :user do
+    root to: 'wikis#index', as: 'authenticated_root'
+  end
 
   root 'welcome#index'
+  get 'about' => 'welcome#about'
+end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -59,4 +79,3 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-end

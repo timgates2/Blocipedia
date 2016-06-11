@@ -11,7 +11,7 @@ class ApplicationPolicy
   end
 
   def show?
-    !record.private? || user.present?
+    true
   end
 
   def create?
